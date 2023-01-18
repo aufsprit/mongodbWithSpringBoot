@@ -4,6 +4,8 @@ import lombok.Builder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Arrays;
+
 @Builder
 @Document("testCol") // collection name
 public class studentInfo {
@@ -41,6 +43,6 @@ public class studentInfo {
     public void setEmail(String email) { this.email = email; }
     public org.bson.Document getBelong() { return belong; }
     public void setBelong(org.bson.Document belong) { this.belong = belong; }
-    public String[] getHobby() { return hobby; }
+    public String getHobby() { return Arrays.toString(hobby); }
     public void setHobby(String[] hobby) { this.hobby = hobby; }
 }
