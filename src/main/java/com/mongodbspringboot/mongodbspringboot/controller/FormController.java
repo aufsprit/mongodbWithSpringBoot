@@ -1,6 +1,8 @@
 package com.mongodbspringboot.mongodbspringboot.controller;
 
-import com.mongodbspringboot.mongodbspringboot.dto.InputForSearchDto;
+import com.mongodbspringboot.mongodbspringboot.dto.InputIdDto;
+import com.mongodbspringboot.mongodbspringboot.dto.InsertDto;
+import com.mongodbspringboot.mongodbspringboot.dto.UpdateDto;
 import com.mongodbspringboot.mongodbspringboot.service.studentInfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -22,8 +24,38 @@ public class FormController {
         return "main";
     }
 
+    @GetMapping("/insert")
+    public String insert() {
+        return "insert";
+    }
+
+    @GetMapping("/delete")
+    public String delete() {
+        return "delete";
+    }
+
+    @GetMapping("/update")
+    public String update() {
+        return "update";
+    }
+
+    @PostMapping("/insert")
+    public void postInsert(InsertDto insertDto) {
+        studentInfoService.insertStudentInfo(insertDto);
+    }
+
+    @PostMapping("/delete")
+    public void postDelete(InputIdDto inputIdDto) {
+        studentInfoService.deleteInfoById(inputIdDto.getId());
+    }
+
+    @PostMapping("/update")
+    public void postDelete(UpdateDto updateDto) {
+        studentInfoService.updateStudentInfoById(updateDto.getId());
+    }
+
     @PostMapping("/search")
-    public ModelAndView postDirection(@ModelAttribute InputForSearchDto inputForSearchDto) {
+    public ModelAndView postSearch(@ModelAttribute InputIdDto inputForSearchDto) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("output");
         if(Objects.equals(inputForSearchDto.getId(), "")) {

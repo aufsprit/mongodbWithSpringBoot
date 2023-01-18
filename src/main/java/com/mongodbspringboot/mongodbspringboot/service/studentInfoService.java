@@ -1,5 +1,6 @@
 package com.mongodbspringboot.mongodbspringboot.service;
 
+import com.mongodbspringboot.mongodbspringboot.dto.InsertDto;
 import com.mongodbspringboot.mongodbspringboot.model.studentInfo;
 import com.mongodbspringboot.mongodbspringboot.repository.studentInfoRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,38 +18,20 @@ public class studentInfoService {
 
     private final studentInfoRepository studentInfoRepository;
 
-    public void insertStudentInfo() {
+    public void insertStudentInfo(InsertDto insertDto) {
+        String[] toBelong = insertDto.getBelong().split(" ");
+        Document belong = new Document();
+        belong.append("coll_name", toBelong[0]).append("dept_name", toBelong[1]);
+        String[] hobby = insertDto.getHobby().split(" ");
         studentInfoRepository.save(
                 new studentInfo(
-                        "2015100930",
-                        "aufsprit",
-                        4,
-                        "male",
-                        "sio3@gmail.com",
-                        new Document("coll_name", "컴퓨터학부").append("dept_name", "컴퓨터학과"),
-                        new String[]{"게임","코딩"}
-                )
-        );
-        studentInfoRepository.save(
-                new studentInfo(
-                        "2019201030",
-                        "test",
-                        3,
-                        "male",
-                        "test@gmail.com",
-                        new Document("coll_name", "test1").append("dept_name", "test2"),
-                        new String[]{"testtest","test"}
-                )
-        );
-        studentInfoRepository.save(
-                new studentInfo(
-                        "2020094140",
-                        "saltIs",
-                        4,
-                        "female",
-                        "saltIsSalt@gmail.com",
-                        new Document("coll_name", "간호학과").append("dept_name", "소아간호전공"),
-                        new String[]{"피아노연주","요리"}
+                        insertDto.getId(),
+                        insertDto.getName(),
+                        insertDto.getGrade(),
+                        insertDto.getGender(),
+                        insertDto.getEmail(),
+                        belong,
+                        hobby
                 )
         );
     }
@@ -87,19 +70,4 @@ public class studentInfoService {
     public void deleteInfoById(String id) {
         studentInfoRepository.deleteById(id);
     }
-
-    public String getStudentInfoDetails(studentInfo id) {
-        System.out.println(
-                id.getId() + " " +
-                        id.getName() + " " +
-                        id.getGrade() + " " +
-                        id.getGender() + " " +
-                        id.getEmail() + " " +
-                        id.getBelong() + " " /*+
-                        Arrays.toString(id.getHobby())*/
-        );
-
-        return "";
-    }
-
 }
