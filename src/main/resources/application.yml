@@ -1,0 +1,10 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://${ID}:${KEY}@${DBNAME}.mongodb.net/?retryWrites=true&w=majority
+      database: testDB
+  thymeleaf3:
+    decoupled-logic: true
+  data.rest:
+    base-path: /api
+    detection-strategy: annotated
