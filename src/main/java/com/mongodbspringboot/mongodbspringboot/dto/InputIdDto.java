@@ -5,6 +5,6 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class InputForSearchDto {
+public class InputIdDto {
     private String id;
 }
