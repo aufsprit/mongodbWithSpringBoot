@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Student info management</title>
+    <!--부트스트랩 css 추가-->
+    <link rel="stylesheet" href="/css/lib/bootstrap.min.css">
+
+</head>
+<body>
+<div>
+    <h2 class="h2-title">Student info management</h2>
+</div>
+
+<table class="table table-hover">
+    <tr>
+        <th>학번</th>
+        <th>이름</th>
+        <th>학년</th>
+        <th>성별</th>
+        <th>이메일</th>
+        <th>소속</th>
+        <th>취미</th>
+    </tr>
+    {{#each outputFormList}}
+        <tr>
+            <td>{{id}}</td>
+            <td>{{name}}</td>
+            <td>{{grade}}</td>
+            <td>{{gender}}</td>
+            <td>{{email}}</td>
+            <td>{{belong}}</td>
+            <td>{{hobby}}</td>
+        </tr>
+    {{/each}}
+</table>
+
+<script src="/js/lib/jquery.min.js"></script>
+<script src="/js/lib/bootstrap.min.js"></script>
+
+</body>
+</html>

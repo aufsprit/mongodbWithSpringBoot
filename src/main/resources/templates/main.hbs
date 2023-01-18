@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Student info management</title>
+
+    <!--부트스트랩 css 추가-->
+    <link rel="stylesheet" href="/css/lib/bootstrap.min.css">
+
+</head>
+<body>
+<div>
+    <div>
+        <div class="container">
+            <div>
+                <h2>Student info management</h2>
+            </div>
+            <div class="body">
+                <form action="/search" method = "post">
+                    <div>
+                        <label for="keyword">검색어를 입력해주세요.</label>
+                        <input type="text" class="form-control" id="id" name="id"
+                               placeholder="학번을 입력하세요.">
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-primary" id="btn-save">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    <!--로딩 속도를 위해 위쪽에 css 를, 아래쪽에 js를 놓았음-->
+    <!--부트스트랩 js, jquery 추가-->
+    <script src="/js/lib/jquery.min.js"></script>
+    <script src="/js/lib/bootstrap.min.js"></script>
+
+</body>
+</html>
