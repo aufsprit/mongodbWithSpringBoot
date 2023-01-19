@@ -1,5 +1,6 @@
 package com.mongodbspringboot.mongodbspringboot.controller;
 
+import com.mongodbspringboot.mongodbspringboot.domain.constant.SearchType;
 import com.mongodbspringboot.mongodbspringboot.dto.InputIdDto;
 import com.mongodbspringboot.mongodbspringboot.dto.InsertDto;
 import com.mongodbspringboot.mongodbspringboot.dto.UpdateDto;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Objects;
@@ -40,18 +42,28 @@ public class FormController {
     }
 
     @PostMapping("/insert")
-    public void postInsert(InsertDto insertDto) {
+    public String postInsert(InsertDto insertDto) {
         studentInfoService.insertStudentInfo(insertDto);
+
+        return "redirect:/";
     }
 
     @PostMapping("/delete")
-    public void postDelete(InputIdDto inputIdDto) {
+    public String postDelete(InputIdDto inputIdDto) {
         studentInfoService.deleteInfoById(inputIdDto.getId());
+
+        return "redirect:/";
     }
 
     @PostMapping("/update")
-    public void postDelete(UpdateDto updateDto) {
-        studentInfoService.updateStudentInfoById(updateDto.getId());
+    public String updateInfoById(
+            @RequestParam(required = false) SearchType searchType,
+            @RequestParam(required = false) String searchValue,
+            UpdateDto updateDto
+    ) {
+        studentInfoService.updateStudentInfoById(updateDto.getId(), searchType, searchValue);
+
+        return "redirect:/";
     }
 
     @PostMapping("/search")
