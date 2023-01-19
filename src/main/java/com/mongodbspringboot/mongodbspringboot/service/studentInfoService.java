@@ -1,5 +1,6 @@
 package com.mongodbspringboot.mongodbspringboot.service;
 
+import com.mongodbspringboot.mongodbspringboot.domain.constant.SearchType;
 import com.mongodbspringboot.mongodbspringboot.dto.InsertDto;
 import com.mongodbspringboot.mongodbspringboot.model.studentInfo;
 import com.mongodbspringboot.mongodbspringboot.repository.studentInfoRepository;
@@ -47,19 +48,18 @@ public class studentInfoService {
         return studentInfoRepository.findAll();
     }
 
-    public void updateStudentInfoById(String id) {
-        int newGrade = 2;
-        String newEmail = "newEmail@mail.com";
-        String[] newHobby = {"coding", "game"};
-
+    public void updateStudentInfoById(String id, SearchType searchType, String searchKeyword) {
+        if(searchKeyword == null || searchKeyword.isBlank()) {
+            log.error("키워드가 존재하지 않음");
+            return;
+        }
+        String[] hobby = searchKeyword.split(" ");
         List<studentInfo> list = studentInfoRepository.findAll(id);
-        list.forEach(
-                studentId ->
-                {
-                    studentId.setGrade(newGrade);
-                    studentId.setEmail(newEmail);
-                    studentId.setHobby(newHobby);
-                });
+        switch (searchType) {
+            case GRADE -> list.forEach(info -> info.setGrade(Integer.parseInt(searchKeyword)));
+            case EMAIL -> list.forEach(info -> info.setEmail(searchKeyword));
+            case HOBBY -> list.forEach(info -> info.setHobby(hobby));
+        }
         List<studentInfo> infoUpdated = studentInfoRepository.saveAll(list);
     }
 
