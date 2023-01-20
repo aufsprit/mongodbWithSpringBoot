@@ -13,6 +13,8 @@ public interface studentInfoRepository extends MongoRepository<studentInfo, Stri
 
     public long count();
 
+    public long countById(String id);
+
     @Query("{id: '?0'}")
     List<studentInfo> findAll(String id);
 }

@@ -43,9 +43,15 @@ public class studentInfoService {
     }
 
     public List<studentInfo> selectAllInfo() {
-        /*long count = studentInfoRepository.count();
-        System.out.println("Entered number of student : " + count);*/
         return studentInfoRepository.findAll();
+    }
+
+    public long countAllInfo() {
+        return studentInfoRepository.count();
+    }
+
+    public long countInfoById(String keyword) {
+        return studentInfoRepository.countById(keyword);
     }
 
     public void updateStudentInfoById(String id, SearchType searchType, String searchKeyword) {

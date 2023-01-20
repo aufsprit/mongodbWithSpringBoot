@@ -55,6 +55,13 @@ public class FormController {
         return "redirect:/";
     }
 
+    @PostMapping("/deleteAll")
+    public String postDelete() {
+        studentInfoService.deleteAllInfo();
+
+        return "redirect:/";
+    }
+
     @PostMapping("/update")
     public String updateInfoById(
             @RequestParam(required = false) SearchType searchType,
@@ -71,9 +78,13 @@ public class FormController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("output");
         if(Objects.equals(inputForSearchDto.getId(), "")) {
+            modelAndView.addObject("count",
+                    studentInfoService.countAllInfo());
             modelAndView.addObject("outputFormList",
                     studentInfoService.selectAllInfo());
         } else {
+            modelAndView.addObject("count",
+                    studentInfoService.countInfoById(inputForSearchDto.getId()));
             modelAndView.addObject("outputFormList",
                     studentInfoService.selectInfoById(inputForSearchDto.getId()));
         }
