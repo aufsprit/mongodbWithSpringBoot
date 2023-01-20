@@ -42,6 +42,22 @@ public class studentInfoService {
         return Collections.singletonList(studentInfo);
     }
 
+    public List<studentInfo> selectInfoByName(String name) {
+        return studentInfoRepository.findStudentInfoByName(name);
+    }
+
+    public List<studentInfo> selectInfoByGrade(int grade) {
+        return studentInfoRepository.findStudentInfoByGrade(grade);
+    }
+
+    public List<studentInfo> selectInfoByBelong(Document belong) {
+        return studentInfoRepository.findStudentInfoByBelongContains(belong);
+    }
+
+    public List<studentInfo> selectInfoByHobby(String hobby) {
+        return studentInfoRepository.findStudentInfoByHobbyContains(hobby);
+    }
+
     public List<studentInfo> selectAllInfo() {
         return studentInfoRepository.findAll();
     }
@@ -49,9 +65,20 @@ public class studentInfoService {
     public long countAllInfo() {
         return studentInfoRepository.count();
     }
-
     public long countInfoById(String keyword) {
         return studentInfoRepository.countById(keyword);
+    }
+    public long countInfoByName(String keyword) {
+        return studentInfoRepository.countByName(keyword);
+    }
+    public long countInfoByGrade(String keyword) {
+        return studentInfoRepository.countByGrade(Integer.parseInt(keyword));
+    }
+    public long countInfoByBelong(String keyword) {
+        return studentInfoRepository.countByBelongContains(Document.parse(keyword));
+    }
+    public long countInfoByHobby(String keyword) {
+        return studentInfoRepository.countByHobbyContains(keyword);
     }
 
     public void updateStudentInfoById(String id, SearchType searchType, String searchKeyword) {
