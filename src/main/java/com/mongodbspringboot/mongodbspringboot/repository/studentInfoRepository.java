@@ -1,7 +1,6 @@
 package com.mongodbspringboot.mongodbspringboot.repository;
 
 import com.mongodbspringboot.mongodbspringboot.model.studentInfo;
-import org.bson.Document;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
@@ -19,7 +18,7 @@ public interface studentInfoRepository extends MongoRepository<studentInfo, Stri
     List<studentInfo> findStudentInfoByGrade(int grade);
 
     @Query("{belong: '?0'}")
-    List<studentInfo> findStudentInfoByBelongContains(Document belong);
+    List<studentInfo> findStudentInfoByBelongContains(String belong);
 
     @Query("{hobby: '?0'}")
     List<studentInfo> findStudentInfoByHobbyContains(String hobby);
@@ -30,7 +29,7 @@ public interface studentInfoRepository extends MongoRepository<studentInfo, Stri
     public long countById(String id);
     public long countByName(String name);
     public long countByGrade(int grade);
-    public long countByBelongContains(Document belong);
+    public long countByBelongContains(String belong);
     public long countByHobbyContains(String hobby);
 
     @Query("{id: '?0'}")

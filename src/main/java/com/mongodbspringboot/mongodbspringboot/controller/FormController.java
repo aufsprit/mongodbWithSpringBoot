@@ -5,9 +5,8 @@ import com.mongodbspringboot.mongodbspringboot.dto.InputIdDto;
 import com.mongodbspringboot.mongodbspringboot.dto.InsertDto;
 import com.mongodbspringboot.mongodbspringboot.dto.UpdateDto;
 import com.mongodbspringboot.mongodbspringboot.dto.detailDto;
-import com.mongodbspringboot.mongodbspringboot.service.studentInfoService;
+import com.mongodbspringboot.mongodbspringboot.service.*;
 import lombok.RequiredArgsConstructor;
-import org.bson.Document;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,7 +20,11 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class FormController {
 
-    private final studentInfoService studentInfoService;
+    private final InfoCountService infoCountService;
+    private final studentInfoDeleteService studentInfoDeleteService;
+    private final studentInfoSelectService studentInfoSelectService;
+    private final studentInfoInsertService studentInfoInsertService;
+    private final studentInfoUpdateService studentInfoUpdateService;
 
     @GetMapping("/")
     public String main() {
@@ -50,21 +53,21 @@ public class FormController {
 
     @PostMapping("/insert")
     public String postInsert(InsertDto insertDto) {
-        studentInfoService.insertStudentInfo(insertDto);
+        studentInfoInsertService.insertStudentInfo(insertDto);
 
         return "redirect:/";
     }
 
     @PostMapping("/delete")
     public String postDelete(InputIdDto inputIdDto) {
-        studentInfoService.deleteInfoById(inputIdDto.getId());
+        studentInfoDeleteService.deleteInfoById(inputIdDto.getId());
 
         return "redirect:/";
     }
 
     @PostMapping("/deleteAll")
     public String postDelete() {
-        studentInfoService.deleteAllInfo();
+        studentInfoDeleteService.deleteAllInfo();
 
         return "redirect:/";
     }
@@ -75,7 +78,7 @@ public class FormController {
             @RequestParam(required = false) String searchValue,
             UpdateDto updateDto
     ) {
-        studentInfoService.updateStudentInfoById(updateDto.getId(), searchType, searchValue);
+        studentInfoUpdateService.updateStudentInfoById(updateDto.getId(), searchType, searchValue);
 
         return "redirect:/";
     }
@@ -91,30 +94,30 @@ public class FormController {
         String keyword = String.valueOf(searchType);
         if(searchValue.equals("")) {
             modelAndView.addObject("count",
-                    studentInfoService.countAllInfo());
+                    infoCountService.countAllInfo());
             modelAndView.addObject("outputFormList",
-                    studentInfoService.selectAllInfo());
+                    studentInfoSelectService.selectAllInfo());
         } else {
             if ("NAME".equals(keyword)) {
                 modelAndView.addObject("count",
-                        studentInfoService.countInfoByName(searchValue));
+                        infoCountService.countInfoByName(searchValue));
                 modelAndView.addObject("outputFormList",
-                        studentInfoService.selectInfoByName(searchValue));
+                        studentInfoSelectService.selectInfoByName(searchValue));
             } else if ("GRADE".equals(keyword)) {
                 modelAndView.addObject("count",
-                        studentInfoService.countInfoByGrade(searchValue));
+                        infoCountService.countInfoByGrade(searchValue));
                 modelAndView.addObject("outputFormList",
-                        studentInfoService.selectInfoByGrade(Integer.parseInt(searchValue)));
+                        studentInfoSelectService.selectInfoByGrade(searchValue));
             } else if ("BELONG".equals(keyword)) {
                 modelAndView.addObject("count",
-                        studentInfoService.countInfoByBelong(searchValue));
+                infoCountService.countInfoByBelong(searchValue));
                 modelAndView.addObject("outputFormList",
-                        studentInfoService.selectInfoByBelong(Document.parse(searchValue)));
+                        studentInfoSelectService.selectInfoByBelong(searchValue));
             } else if ("HOBBY".equals(keyword)) {
                 modelAndView.addObject("count",
-                        studentInfoService.countInfoByHobby(searchValue));
+                        infoCountService.countInfoByHobby(searchValue));
                 modelAndView.addObject("outputFormList",
-                        studentInfoService.selectInfoByHobby(searchValue));
+                        studentInfoSelectService.selectInfoByHobby(searchValue));
             }
         }
         return modelAndView;
@@ -126,14 +129,14 @@ public class FormController {
         modelAndView.setViewName("output");
         if(Objects.equals(inputForSearchDto.getId(), "")) {
             modelAndView.addObject("count",
-                    studentInfoService.countAllInfo());
+                    infoCountService.countAllInfo());
             modelAndView.addObject("outputFormList",
-                    studentInfoService.selectAllInfo());
+                    studentInfoSelectService.selectAllInfo());
         } else {
             modelAndView.addObject("count",
-                    studentInfoService.countInfoById(inputForSearchDto.getId());
+                    infoCountService.countInfoById(inputForSearchDto.getId()));
             modelAndView.addObject("outputFormList",
-                    studentInfoService.selectInfoById(inputForSearchDto.getId()));
+                    studentInfoSelectService.selectInfoById(inputForSearchDto.getId()));
         }
         return modelAndView;
     }
