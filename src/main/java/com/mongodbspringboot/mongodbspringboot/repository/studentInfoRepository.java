@@ -14,7 +14,7 @@ public interface studentInfoRepository extends MongoRepository<studentInfo, Stri
     @Query("{name: '?0'}")
     List<studentInfo> findStudentInfoByName(String name);
 
-    @Query("{grade: '?0'}")
+    @Query("{grade: ?0}")
     List<studentInfo> findStudentInfoByGrade(int grade);
 
     @Query("{'belong.dept_name': '?0'}")

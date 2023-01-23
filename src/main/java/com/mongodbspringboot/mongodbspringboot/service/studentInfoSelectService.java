@@ -30,6 +30,7 @@ public class studentInfoSelectService {
             Integer.parseInt(grade);
             return studentInfoRepository.findStudentInfoByGrade(Integer.parseInt(grade));
         } catch (NumberFormatException e) {
+            log.error("숫자가 아닙니다.");
             return null;
         }
     }
