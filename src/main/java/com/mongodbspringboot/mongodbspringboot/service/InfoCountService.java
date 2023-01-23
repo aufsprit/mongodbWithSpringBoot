@@ -29,9 +29,6 @@ public class InfoCountService {
             return 0;
         }
     }
-    public long countInfoByBelong(String keyword) {
-        return studentInfoRepository.countByBelongContains(keyword);
-    }
     public long countInfoByHobby(String keyword) {
         return studentInfoRepository.countByHobbyContains(keyword);
     }

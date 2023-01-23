@@ -34,8 +34,8 @@ public class studentInfoSelectService {
         }
     }
 
-    public List<studentInfo> selectInfoByBelong(String belong) {
-        return studentInfoRepository.findStudentInfoByBelongContains(belong);
+    public List<studentInfo> selectInfoByDept_name(String belong) {
+        return studentInfoRepository.findStudentInfoByBelong(belong);
     }
 
     public List<studentInfo> selectInfoByHobby(String hobby) {

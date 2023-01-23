@@ -17,19 +17,16 @@ public interface studentInfoRepository extends MongoRepository<studentInfo, Stri
     @Query("{grade: '?0'}")
     List<studentInfo> findStudentInfoByGrade(int grade);
 
-    @Query("{belong: '?0'}")
-    List<studentInfo> findStudentInfoByBelongContains(String belong);
+    @Query("{'belong.dept_name': '?0'}")
+    List<studentInfo> findStudentInfoByBelong(String belong);
 
     @Query("{hobby: '?0'}")
     List<studentInfo> findStudentInfoByHobbyContains(String hobby);
 
-
     public long count();
-
     public long countById(String id);
     public long countByName(String name);
     public long countByGrade(int grade);
-    public long countByBelongContains(String belong);
     public long countByHobbyContains(String hobby);
 
     @Query("{id: '?0'}")
