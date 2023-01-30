@@ -1,6 +1,7 @@
 package com.mongodbspringboot.mongodbspringboot.controller;
 
 import com.mongodbspringboot.mongodbspringboot.domain.constant.SearchType;
+import com.mongodbspringboot.mongodbspringboot.dto.CompoundDto;
 import com.mongodbspringboot.mongodbspringboot.dto.InputIdDto;
 import com.mongodbspringboot.mongodbspringboot.service.InfoCountService;
 import com.mongodbspringboot.mongodbspringboot.service.studentInfoSelectService;
@@ -56,11 +57,13 @@ public class FormController {
                 modelAndView.addObject("outputFormList",
                         studentInfoSelectService.selectInfoByGrade(searchValue));
             } else if ("BELONG".equals(keyword)) {
+                modelAndView.addObject("count",
+                        infoCountService.countInfoByBelong(searchValue));
                 modelAndView.addObject("outputFormList",
                         studentInfoSelectService.selectInfoByDept_name(searchValue));
             } else if ("HOBBY".equals(keyword)) {
                 modelAndView.addObject("count",
-                        infoCountService.countInfoByHobby(searchValue));
+                        studentInfoSelectService.selectInfoByHobby(searchValue).size());
                 modelAndView.addObject("outputFormList",
                         studentInfoSelectService.selectInfoByHobby(searchValue));
             }

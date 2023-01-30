@@ -27,7 +27,6 @@ public interface studentInfoRepository extends MongoRepository<studentInfo, Stri
     public long countById(String id);
     public long countByName(String name);
     public long countByGrade(int grade);
-    public long countByHobbyContains(String hobby);
 
     @Query("{id: '?0'}")
     List<studentInfo> findAll(String id);

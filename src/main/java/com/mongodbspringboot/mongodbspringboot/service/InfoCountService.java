@@ -29,7 +29,7 @@ public class InfoCountService {
             return 0;
         }
     }
-    public long countInfoByHobby(String keyword) {
-        return studentInfoRepository.countByHobbyContains(keyword);
+    public long countInfoByBelong(String keyword) {
+        return studentInfoRepository.findStudentInfoByBelong(keyword).size();
     }
 }
