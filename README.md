@@ -11,3 +11,11 @@
 * Spring Data MongoDB
 * Lombok
 * Handlebars
+
+------
+### 참조
+#### Spring-MongoDB package-summary
+* https://docs.spring.io/spring-data/mongodb/docs/current/api/org/springframework/data/mongodb/repository/package-summary.html
+
+#### Spring-MongoDB reference
+* https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/
