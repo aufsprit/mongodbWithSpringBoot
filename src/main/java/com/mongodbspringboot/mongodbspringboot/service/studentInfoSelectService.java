@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -40,7 +41,11 @@ public class studentInfoSelectService {
     }
 
     public List<studentInfo> selectInfoByHobby(String hobby) {
-        return studentInfoRepository.findStudentInfoByHobbyContains(hobby);
+        String[] Hobby = hobby.split(" ");
+        for (String s : Hobby) {
+            return studentInfoRepository.findStudentInfoByHobbyContains(s);
+        }
+        return null;
     }
 
     public List<studentInfo> selectAllInfo() {
