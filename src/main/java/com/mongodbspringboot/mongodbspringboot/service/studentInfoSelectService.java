@@ -4,6 +4,7 @@ import com.mongodbspringboot.mongodbspringboot.model.studentInfo;
 import com.mongodbspringboot.mongodbspringboot.repository.studentInfoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.bson.Document;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -41,15 +42,26 @@ public class studentInfoSelectService {
     }
 
     public List<studentInfo> selectInfoByHobby(String hobby) {
-        String[] Hobby = hobby.split(" ");
-        for (String s : Hobby) {
-            return studentInfoRepository.findStudentInfoByHobbyContains(s);
-        }
-        return null;
+        return studentInfoRepository.findStudentInfoByHobbyContains(hobby);
     }
 
     public List<studentInfo> selectAllInfo() {
         return studentInfoRepository.findAll();
     }
 
+    public List<studentInfo> selectCompoundInfo(String name, String grade, String belong, String hobby) {
+        System.out.println(name + grade + belong + hobby);
+        List<studentInfo> nameList = selectInfoByName(name);
+        List<studentInfo> gradeList = selectInfoByGrade(grade);
+        List<studentInfo> belongList = selectInfoByDept_name(belong);
+        List<studentInfo> hobbyList = selectInfoByHobby(hobby);
+        List<studentInfo> newList = new ArrayList<>();
+
+        System.out.println(nameList);
+        System.out.println(gradeList);
+        System.out.println(belongList);
+        System.out.println(hobbyList);
+
+        return null;
+    }
 }

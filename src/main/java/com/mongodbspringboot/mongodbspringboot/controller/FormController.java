@@ -62,12 +62,32 @@ public class FormController {
                 modelAndView.addObject("outputFormList",
                         studentInfoSelectService.selectInfoByDept_name(searchValue));
             } else if ("HOBBY".equals(keyword)) {
-                modelAndView.addObject("count",
-                        studentInfoSelectService.selectInfoByHobby(searchValue).size());
-                modelAndView.addObject("outputFormList",
-                        studentInfoSelectService.selectInfoByHobby(searchValue));
+                String[] hobby = searchValue.split(" ");
+                long count = 0;
+                for(String s : hobby) {
+                    modelAndView.addObject("outputFormList",
+                            studentInfoSelectService.selectInfoByHobby(s));
+                }
+                String s = modelAndView.toString();
+                for(int i = 0; i < s.length(); i++) {
+                    if(s.charAt(i) == '@') count++;
+                }
+                modelAndView.addObject("count", count);
             }
         }
+        return modelAndView;
+    }
+
+    @PostMapping("/compound")
+    public ModelAndView postSearchCompound(@ModelAttribute CompoundDto compoundDto) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("output");
+        modelAndView.addObject("outputFormList",
+                studentInfoSelectService.selectCompoundInfo(
+                        compoundDto.getName(),
+                        compoundDto.getGrade(),
+                        compoundDto.getBelong(),
+                        compoundDto.getHobby()));
         return modelAndView;
     }
 
