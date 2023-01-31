@@ -4,10 +4,8 @@ import com.mongodbspringboot.mongodbspringboot.model.studentInfo;
 import com.mongodbspringboot.mongodbspringboot.repository.studentInfoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.bson.Document;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -49,19 +47,48 @@ public class studentInfoSelectService {
         return studentInfoRepository.findAll();
     }
 
-    public List<studentInfo> selectCompoundInfo(String name, String grade, String belong, String hobby) {
-        System.out.println(name + grade + belong + hobby);
-        List<studentInfo> nameList = selectInfoByName(name);
-        List<studentInfo> gradeList = selectInfoByGrade(grade);
-        List<studentInfo> belongList = selectInfoByDept_name(belong);
-        List<studentInfo> hobbyList = selectInfoByHobby(hobby);
-        List<studentInfo> newList = new ArrayList<>();
+    // 11
+    public List<studentInfo> selectInfoByNameAndGradeAndBelongAndHobby(String name, String grade, String belong, String hobby) {
+        return studentInfoRepository.findStudentInfoByNameAndGradeAndBelongAndHobbyContains(name, Integer.parseInt(grade), belong, hobby);
+    }
 
-        System.out.println(nameList);
-        System.out.println(gradeList);
-        System.out.println(belongList);
-        System.out.println(hobbyList);
+    public List<studentInfo> selectInfoByNameAndGradeAndBelong(String name, String grade, String belong) {
+        return studentInfoRepository.findStudentInfoByNameAndGradeAndBelong(name, Integer.parseInt(grade), belong);
+    }
 
-        return null;
+    public List<studentInfo> selectInfoByNameAndGradeAndHobby(String name, String grade, String hobby) {
+        return studentInfoRepository.findStudentInfoByNameAndGradeAndHobbyContains(name, Integer.parseInt(grade), hobby);
+    }
+
+    public List<studentInfo> selectInfoByNameAndBelongAndHobby(String name, String belong, String hobby) {
+        return studentInfoRepository.findStudentInfoByNameAndBelongAndHobbyContains(name, belong, hobby);
+    }
+
+    public List<studentInfo> selectInfoByGradeAndBelongAndHobby(String grade, String belong, String hobby) {
+        return studentInfoRepository.findStudentInfoByGradeAndBelongAndHobbyContains(Integer.parseInt(grade), belong, hobby);
+    }
+
+    public List<studentInfo> selectInfoByNameAndGrade(String name, String grade) {
+        return studentInfoRepository.findStudentInfoByNameAndGrade(name, Integer.parseInt(grade));
+    }
+
+    public List<studentInfo> selectInfoByNameAndBelong(String name, String belong) {
+        return studentInfoRepository.findStudentInfoByNameAndBelong(name, belong);
+    }
+
+    public List<studentInfo> selectInfoByNameAndHobby(String name, String hobby) {
+        return studentInfoRepository.findStudentInfoByNameAndHobbyContains(name, hobby);
+    }
+
+    public List<studentInfo> selectInfoByGradeAndBelong(String grade, String belong) {
+        return studentInfoRepository.findStudentInfoByGradeAndBelong(Integer.parseInt(grade), belong);
+    }
+
+    public List<studentInfo> selectInfoByGradeAndHobby(String grade, String hobby) {
+        return studentInfoRepository.findStudentInfoByGradeAndHobbyContains(Integer.parseInt(grade), hobby);
+    }
+
+    public List<studentInfo> selectInfoByBelongAndHobby(String belong, String hobby) {
+        return studentInfoRepository.findStudentInfoByBelongAndHobbyContains(belong, hobby);
     }
 }

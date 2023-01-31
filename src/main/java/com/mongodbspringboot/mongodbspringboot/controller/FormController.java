@@ -81,13 +81,111 @@ public class FormController {
     @PostMapping("/compound")
     public ModelAndView postSearchCompound(@ModelAttribute CompoundDto compoundDto) {
         ModelAndView modelAndView = new ModelAndView();
+        long count = 0;
         modelAndView.setViewName("output");
-        modelAndView.addObject("outputFormList",
-                studentInfoSelectService.selectCompoundInfo(
-                        compoundDto.getName(),
-                        compoundDto.getGrade(),
-                        compoundDto.getBelong(),
-                        compoundDto.getHobby()));
+        if (!compoundDto.getName().equals("")&&
+                !compoundDto.getGrade().equals("")&&
+                !compoundDto.getBelong().equals("")&&
+                !compoundDto.getHobby().equals("")) {
+            modelAndView.addObject("outputFormList",
+                    studentInfoSelectService.selectInfoByNameAndGradeAndBelongAndHobby(
+                            compoundDto.getName(),
+                            compoundDto.getGrade(),
+                            compoundDto.getBelong(),
+                            compoundDto.getHobby()));
+        } else if (!compoundDto.getName().equals("")&&
+                !compoundDto.getGrade().equals("")&&
+                !compoundDto.getBelong().equals("")) {
+            modelAndView.addObject("outputFormList",
+                    studentInfoSelectService.selectInfoByNameAndGradeAndBelong(
+                            compoundDto.getName(),
+                            compoundDto.getGrade(),
+                            compoundDto.getBelong()));
+        } else if (!compoundDto.getName().equals("")&&
+                !compoundDto.getGrade().equals("")&&
+                !compoundDto.getHobby().equals("")) {
+            modelAndView.addObject("outputFormList",
+                    studentInfoSelectService.selectInfoByNameAndGradeAndHobby(
+                            compoundDto.getName(),
+                            compoundDto.getGrade(),
+                            compoundDto.getHobby()));
+        } else if (!compoundDto.getName().equals("")&&
+                !compoundDto.getBelong().equals("")&&
+                !compoundDto.getHobby().equals("")) {
+            modelAndView.addObject("outputFormList",
+                    studentInfoSelectService.selectInfoByNameAndBelongAndHobby(
+                            compoundDto.getName(),
+                            compoundDto.getBelong(),
+                            compoundDto.getHobby()));
+        } else if (!compoundDto.getGrade().equals("")&&
+                !compoundDto.getBelong().equals("")&&
+                !compoundDto.getHobby().equals("")) {
+            modelAndView.addObject("outputFormList",
+                    studentInfoSelectService.selectInfoByGradeAndBelongAndHobby(
+                            compoundDto.getGrade(),
+                            compoundDto.getBelong(),
+                            compoundDto.getHobby()));
+        } else if (!compoundDto.getName().equals("")&&
+                !compoundDto.getGrade().equals("")) {
+            modelAndView.addObject("outputFormList",
+                    studentInfoSelectService.selectInfoByNameAndGrade(
+                            compoundDto.getName(),
+                            compoundDto.getGrade()));
+        } else if (!compoundDto.getName().equals("")&&
+                !compoundDto.getBelong().equals("")) {
+            modelAndView.addObject("outputFormList",
+                    studentInfoSelectService.selectInfoByNameAndBelong(
+                            compoundDto.getName(),
+                            compoundDto.getBelong()));
+        } else if (!compoundDto.getName().equals("")&&
+                !compoundDto.getHobby().equals("")) {
+            modelAndView.addObject("outputFormList",
+                    studentInfoSelectService.selectInfoByNameAndHobby(
+                            compoundDto.getName(),
+                            compoundDto.getHobby()));
+        } else if (!compoundDto.getGrade().equals("")&&
+                !compoundDto.getBelong().equals("")) {
+            modelAndView.addObject("outputFormList",
+                    studentInfoSelectService.selectInfoByGradeAndBelong(
+                            compoundDto.getGrade(),
+                            compoundDto.getBelong()));
+        } else if (!compoundDto.getGrade().equals("")&&
+                !compoundDto.getHobby().equals("")) {
+            modelAndView.addObject("outputFormList",
+                    studentInfoSelectService.selectInfoByGradeAndHobby(
+                            compoundDto.getGrade(),
+                            compoundDto.getHobby()));
+        } else if (!compoundDto.getBelong().equals("")&&
+                !compoundDto.getHobby().equals("")) {
+            modelAndView.addObject("outputFormList",
+                    studentInfoSelectService.selectInfoByBelongAndHobby(
+                            compoundDto.getBelong(),
+                            compoundDto.getHobby()));
+        } else if (!compoundDto.getName().equals("")) {
+            modelAndView.addObject("outputFormList",
+                    studentInfoSelectService.selectInfoByName(
+                            compoundDto.getName()));
+        } else if (!compoundDto.getGrade().equals("")) {
+            modelAndView.addObject("outputFormList",
+                    studentInfoSelectService.selectInfoByGrade(
+                            compoundDto.getGrade()));
+        } else if (!compoundDto.getBelong().equals("")) {
+            modelAndView.addObject("outputFormList",
+                    studentInfoSelectService.selectInfoByDept_name(
+                            compoundDto.getBelong()));
+        } else if (!compoundDto.getHobby().equals("")) {
+            modelAndView.addObject("outputFormList",
+                    studentInfoSelectService.selectInfoByHobby(
+                            compoundDto.getHobby()));
+        } else {
+            modelAndView.addObject("outputFormList",
+                    studentInfoSelectService.selectAllInfo());
+        }
+        String s = modelAndView.toString();
+        for(int i = 0; i < s.length(); i++) {
+            if(s.charAt(i) == '@') count++;
+        }
+        modelAndView.addObject("count", count);
         return modelAndView;
     }
 

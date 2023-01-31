@@ -20,8 +20,41 @@ public interface studentInfoRepository extends MongoRepository<studentInfo, Stri
     @Query("{'belong.dept_name': '?0'}")
     List<studentInfo> findStudentInfoByBelong(String belong);
 
-    @Query("{hobby: '?0'}")
+    @Query("{hobby: {$in: ['?0']}}")
     List<studentInfo> findStudentInfoByHobbyContains(String hobby);
+
+    @Query("{name: '?0', grade: ?1, 'belong.dept_name': '?2', hobby: '?3'}")
+    List<studentInfo> findStudentInfoByNameAndGradeAndBelongAndHobbyContains(String name, int grade, String belong, String hobby);
+
+    @Query("{name: '?0', grade: ?1, 'belong.dept_name': '?2'}")
+    List<studentInfo> findStudentInfoByNameAndGradeAndBelong(String name, int grade, String belong);
+
+    @Query("{name: '?0', grade: ?1, hobby: '?2'}")
+    List<studentInfo> findStudentInfoByNameAndGradeAndHobbyContains(String name, int grade, String hobby);
+
+    @Query("{name: '?0', 'belong.dept_name': '?1', hobby: '?2'}")
+    List<studentInfo> findStudentInfoByNameAndBelongAndHobbyContains(String name, String belong, String hobby);
+
+    @Query("{grade: ?0, 'belong.dept_name': '?1', hobby: '?2'}")
+    List<studentInfo> findStudentInfoByGradeAndBelongAndHobbyContains(int grade, String belong, String hobby);
+
+    @Query("{name: '?0', grade: ?1}")
+    List<studentInfo> findStudentInfoByNameAndGrade(String name, int grade);
+
+    @Query("{name: '?0', 'belong.dept_name': '?1'}")
+    List<studentInfo> findStudentInfoByNameAndBelong(String name, String belong);
+
+    @Query("{name: '?0', hobby: '?1'}")
+    List<studentInfo> findStudentInfoByNameAndHobbyContains(String name, String hobby);
+
+    @Query("{grade: ?0, 'belong.dept_name': '?1'}")
+    List<studentInfo> findStudentInfoByGradeAndBelong(int grade, String belong);
+
+    @Query("{grade: ?0, hobby: '?1'}")
+    List<studentInfo> findStudentInfoByGradeAndHobbyContains(int grade, String hobby);
+
+    @Query("{'belong.dept_name': '?0', hobby: ?1}")
+    List<studentInfo> findStudentInfoByBelongAndHobbyContains(String belong, String hobby);
 
     public long count();
     public long countById(String id);
