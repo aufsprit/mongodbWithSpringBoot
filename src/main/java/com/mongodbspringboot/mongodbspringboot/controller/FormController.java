@@ -6,6 +6,7 @@ import com.mongodbspringboot.mongodbspringboot.dto.InputIdDto;
 import com.mongodbspringboot.mongodbspringboot.service.InfoCountService;
 import com.mongodbspringboot.mongodbspringboot.service.studentInfoSelectService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Objects;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class FormController {
@@ -40,39 +42,46 @@ public class FormController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("output");
         String keyword = String.valueOf(searchType);
+        if (keyword.equals("GRADE")) {
+            try {
+                Integer.parseInt(searchValue);
+            } catch (NumberFormatException e) {
+                log.error("숫자가 아닙니다.");
+                return null;
+            }
+        }
         if(searchValue.equals("")) {
             modelAndView.addObject("count",
                     infoCountService.countAllInfo());
             modelAndView.addObject("outputFormList",
                     studentInfoSelectService.selectAllInfo());
         } else {
-            if ("NAME".equals(keyword)) {
-                modelAndView.addObject("count",
-                        infoCountService.countInfoByName(searchValue));
-                modelAndView.addObject("outputFormList",
-                        studentInfoSelectService.selectInfoByName(searchValue));
-            } else if ("GRADE".equals(keyword)) {
-                modelAndView.addObject("count",
-                        infoCountService.countInfoByGrade(searchValue));
-                modelAndView.addObject("outputFormList",
-                        studentInfoSelectService.selectInfoByGrade(searchValue));
-            } else if ("BELONG".equals(keyword)) {
-                modelAndView.addObject("count",
-                        infoCountService.countInfoByBelong(searchValue));
-                modelAndView.addObject("outputFormList",
-                        studentInfoSelectService.selectInfoByDept_name(searchValue));
-            } else if ("HOBBY".equals(keyword)) {
-                String[] hobby = searchValue.split(" ");
-                long count = 0;
-                for(String s : hobby) {
+            switch (keyword) {
+                case "NAME" -> {
+                    modelAndView.addObject("count",
+                            infoCountService.countInfoByName(searchValue));
                     modelAndView.addObject("outputFormList",
-                            studentInfoSelectService.selectInfoByHobby(s));
+                            studentInfoSelectService.selectInfoByName(searchValue));
                 }
-                String s = modelAndView.toString();
-                for(int i = 0; i < s.length(); i++) {
-                    if(s.charAt(i) == '@') count++;
+                case "GRADE" -> {
+                    modelAndView.addObject("count",
+                            infoCountService.countInfoByGrade(searchValue));
+                    modelAndView.addObject("outputFormList",
+                            studentInfoSelectService.selectInfoByGrade(searchValue));
                 }
-                modelAndView.addObject("count", count);
+                case "BELONG" -> {
+                    modelAndView.addObject("count",
+                            infoCountService.countInfoByBelong(searchValue));
+                    modelAndView.addObject("outputFormList",
+                            studentInfoSelectService.selectInfoByDept_name(searchValue));
+                }
+                case "HOBBY" -> {
+                    String[] hobby = searchValue.split(" ");
+                    modelAndView.addObject("outputFormList",
+                            studentInfoSelectService.selectInfoByHobby(hobby));
+                    modelAndView.addObject("count",
+                            infoCountService.countInfoAny(modelAndView.toString()));
+                }
             }
         }
         return modelAndView;
@@ -81,8 +90,16 @@ public class FormController {
     @PostMapping("/compound")
     public ModelAndView postSearchCompound(@ModelAttribute CompoundDto compoundDto) {
         ModelAndView modelAndView = new ModelAndView();
-        long count = 0;
         modelAndView.setViewName("output");
+        if (!compoundDto.getGrade().equals("")) {
+            try {
+                Integer.parseInt(compoundDto.getGrade());
+            } catch (NumberFormatException e) {
+                log.error("숫자가 아닙니다.");
+                return null;
+            }
+        }
+        String[] hobby = compoundDto.getHobby().split(" ");
         if (!compoundDto.getName().equals("")&&
                 !compoundDto.getGrade().equals("")&&
                 !compoundDto.getBelong().equals("")&&
@@ -92,7 +109,7 @@ public class FormController {
                             compoundDto.getName(),
                             compoundDto.getGrade(),
                             compoundDto.getBelong(),
-                            compoundDto.getHobby()));
+                            hobby));
         } else if (!compoundDto.getName().equals("")&&
                 !compoundDto.getGrade().equals("")&&
                 !compoundDto.getBelong().equals("")) {
@@ -108,7 +125,7 @@ public class FormController {
                     studentInfoSelectService.selectInfoByNameAndGradeAndHobby(
                             compoundDto.getName(),
                             compoundDto.getGrade(),
-                            compoundDto.getHobby()));
+                            hobby));
         } else if (!compoundDto.getName().equals("")&&
                 !compoundDto.getBelong().equals("")&&
                 !compoundDto.getHobby().equals("")) {
@@ -116,7 +133,7 @@ public class FormController {
                     studentInfoSelectService.selectInfoByNameAndBelongAndHobby(
                             compoundDto.getName(),
                             compoundDto.getBelong(),
-                            compoundDto.getHobby()));
+                            hobby));
         } else if (!compoundDto.getGrade().equals("")&&
                 !compoundDto.getBelong().equals("")&&
                 !compoundDto.getHobby().equals("")) {
@@ -124,7 +141,7 @@ public class FormController {
                     studentInfoSelectService.selectInfoByGradeAndBelongAndHobby(
                             compoundDto.getGrade(),
                             compoundDto.getBelong(),
-                            compoundDto.getHobby()));
+                            hobby));
         } else if (!compoundDto.getName().equals("")&&
                 !compoundDto.getGrade().equals("")) {
             modelAndView.addObject("outputFormList",
@@ -142,7 +159,7 @@ public class FormController {
             modelAndView.addObject("outputFormList",
                     studentInfoSelectService.selectInfoByNameAndHobby(
                             compoundDto.getName(),
-                            compoundDto.getHobby()));
+                            hobby));
         } else if (!compoundDto.getGrade().equals("")&&
                 !compoundDto.getBelong().equals("")) {
             modelAndView.addObject("outputFormList",
@@ -154,13 +171,13 @@ public class FormController {
             modelAndView.addObject("outputFormList",
                     studentInfoSelectService.selectInfoByGradeAndHobby(
                             compoundDto.getGrade(),
-                            compoundDto.getHobby()));
+                            hobby));
         } else if (!compoundDto.getBelong().equals("")&&
                 !compoundDto.getHobby().equals("")) {
             modelAndView.addObject("outputFormList",
                     studentInfoSelectService.selectInfoByBelongAndHobby(
                             compoundDto.getBelong(),
-                            compoundDto.getHobby()));
+                            hobby));
         } else if (!compoundDto.getName().equals("")) {
             modelAndView.addObject("outputFormList",
                     studentInfoSelectService.selectInfoByName(
@@ -175,17 +192,13 @@ public class FormController {
                             compoundDto.getBelong()));
         } else if (!compoundDto.getHobby().equals("")) {
             modelAndView.addObject("outputFormList",
-                    studentInfoSelectService.selectInfoByHobby(
-                            compoundDto.getHobby()));
+                    studentInfoSelectService.selectInfoByHobby(hobby));
         } else {
             modelAndView.addObject("outputFormList",
                     studentInfoSelectService.selectAllInfo());
         }
-        String s = modelAndView.toString();
-        for(int i = 0; i < s.length(); i++) {
-            if(s.charAt(i) == '@') count++;
-        }
-        modelAndView.addObject("count", count);
+        modelAndView.addObject("count",
+                infoCountService.countInfoAny(modelAndView.toString()));
         return modelAndView;
     }
 

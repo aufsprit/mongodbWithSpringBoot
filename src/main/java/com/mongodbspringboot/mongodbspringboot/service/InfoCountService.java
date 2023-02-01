@@ -22,14 +22,16 @@ public class InfoCountService {
         return studentInfoRepository.countByName(keyword);
     }
     public long countInfoByGrade(String keyword) {
-        try {
-            Integer.parseInt(keyword);
-            return studentInfoRepository.countByGrade(Integer.parseInt(keyword));
-        } catch (NumberFormatException e) {
-            return 0;
-        }
+        return studentInfoRepository.countByGrade(Integer.parseInt(keyword));
     }
     public long countInfoByBelong(String keyword) {
         return studentInfoRepository.findStudentInfoByBelong(keyword).size();
+    }
+    public long countInfoAny(String modelAndViewSize) {
+        long count = 0;
+        for(int i = 0; i < modelAndViewSize.length(); i++) {
+            if(modelAndViewSize.charAt(i) == '@') count++;
+        }
+        return count;
     }
 }

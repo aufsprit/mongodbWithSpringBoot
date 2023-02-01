@@ -26,29 +26,22 @@ public class studentInfoSelectService {
     }
 
     public List<studentInfo> selectInfoByGrade(String grade) {
-        try {
-            Integer.parseInt(grade);
-            return studentInfoRepository.findStudentInfoByGrade(Integer.parseInt(grade));
-        } catch (NumberFormatException e) {
-            log.error("숫자가 아닙니다.");
-            return null;
-        }
+        return studentInfoRepository.findStudentInfoByGrade(Integer.parseInt(grade));
     }
 
     public List<studentInfo> selectInfoByDept_name(String belong) {
         return studentInfoRepository.findStudentInfoByBelong(belong);
     }
 
-    public List<studentInfo> selectInfoByHobby(String hobby) {
-        return studentInfoRepository.findStudentInfoByHobbyContains(hobby);
+    public List<studentInfo> selectInfoByHobby(String[] hobby) {
+        return studentInfoRepository.findStudentInfoByHobbyAll(hobby);
     }
 
     public List<studentInfo> selectAllInfo() {
         return studentInfoRepository.findAll();
     }
 
-    // 11
-    public List<studentInfo> selectInfoByNameAndGradeAndBelongAndHobby(String name, String grade, String belong, String hobby) {
+    public List<studentInfo> selectInfoByNameAndGradeAndBelongAndHobby(String name, String grade, String belong, String[] hobby) {
         return studentInfoRepository.findStudentInfoByNameAndGradeAndBelongAndHobbyContains(name, Integer.parseInt(grade), belong, hobby);
     }
 
@@ -56,15 +49,15 @@ public class studentInfoSelectService {
         return studentInfoRepository.findStudentInfoByNameAndGradeAndBelong(name, Integer.parseInt(grade), belong);
     }
 
-    public List<studentInfo> selectInfoByNameAndGradeAndHobby(String name, String grade, String hobby) {
+    public List<studentInfo> selectInfoByNameAndGradeAndHobby(String name, String grade, String[] hobby) {
         return studentInfoRepository.findStudentInfoByNameAndGradeAndHobbyContains(name, Integer.parseInt(grade), hobby);
     }
 
-    public List<studentInfo> selectInfoByNameAndBelongAndHobby(String name, String belong, String hobby) {
+    public List<studentInfo> selectInfoByNameAndBelongAndHobby(String name, String belong, String[] hobby) {
         return studentInfoRepository.findStudentInfoByNameAndBelongAndHobbyContains(name, belong, hobby);
     }
 
-    public List<studentInfo> selectInfoByGradeAndBelongAndHobby(String grade, String belong, String hobby) {
+    public List<studentInfo> selectInfoByGradeAndBelongAndHobby(String grade, String belong, String[] hobby) {
         return studentInfoRepository.findStudentInfoByGradeAndBelongAndHobbyContains(Integer.parseInt(grade), belong, hobby);
     }
 
@@ -76,7 +69,7 @@ public class studentInfoSelectService {
         return studentInfoRepository.findStudentInfoByNameAndBelong(name, belong);
     }
 
-    public List<studentInfo> selectInfoByNameAndHobby(String name, String hobby) {
+    public List<studentInfo> selectInfoByNameAndHobby(String name, String[] hobby) {
         return studentInfoRepository.findStudentInfoByNameAndHobbyContains(name, hobby);
     }
 
@@ -84,11 +77,11 @@ public class studentInfoSelectService {
         return studentInfoRepository.findStudentInfoByGradeAndBelong(Integer.parseInt(grade), belong);
     }
 
-    public List<studentInfo> selectInfoByGradeAndHobby(String grade, String hobby) {
+    public List<studentInfo> selectInfoByGradeAndHobby(String grade, String[] hobby) {
         return studentInfoRepository.findStudentInfoByGradeAndHobbyContains(Integer.parseInt(grade), hobby);
     }
 
-    public List<studentInfo> selectInfoByBelongAndHobby(String belong, String hobby) {
+    public List<studentInfo> selectInfoByBelongAndHobby(String belong, String[] hobby) {
         return studentInfoRepository.findStudentInfoByBelongAndHobbyContains(belong, hobby);
     }
 }
