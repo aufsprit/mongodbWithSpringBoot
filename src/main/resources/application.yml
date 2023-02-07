@@ -10,4 +10,4 @@ spring:
     detection-strategy: annotated
 Java:
   runtime:
-    version: 11
+    version: 1.8

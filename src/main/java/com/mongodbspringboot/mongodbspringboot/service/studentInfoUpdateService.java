@@ -17,7 +17,7 @@ public class studentInfoUpdateService {
     private final studentInfoRepository studentInfoRepository;
 
     public void updateStudentInfoById(String id, SearchType searchType, String searchKeyword) {
-        if(searchKeyword == null || searchKeyword.isBlank()) {
+        if(searchKeyword == null || searchKeyword.isEmpty()) {
             log.error("키워드가 존재하지 않음");
             return;
         }
