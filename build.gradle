@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.mongodbSpringBoot'
-version = '0.0.1-SNAPSHOT'
+version = 'v1.0'
 sourceCompatibility = '17'
 
 configurations {
@@ -38,4 +38,14 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes('Main-Class': 'com.mongodbspringboot.mongodbspringboot.MongodbSpringBootApplication')
+    }
+}
+
+test.onlyIf {
+    !project.hasProperty('test')
 }
