@@ -24,9 +24,9 @@ public class studentInfoUpdateService {
         String[] hobby = searchKeyword.split(" ");
         List<studentInfo> list = studentInfoRepository.findAll(id);
         switch (searchType) {
-            case GRADE -> list.forEach(info -> info.setGrade(Integer.parseInt(searchKeyword)));
-            case EMAIL -> list.forEach(info -> info.setEmail(searchKeyword));
-            case HOBBY -> list.forEach(info -> info.setHobby(hobby));
+            case GRADE : list.forEach(info -> info.setGrade(Integer.parseInt(searchKeyword)));
+            case EMAIL : list.forEach(info -> info.setEmail(searchKeyword));
+            case HOBBY : list.forEach(info -> info.setHobby(hobby));
         }
         List<studentInfo> infoUpdated = studentInfoRepository.saveAll(list);
     }
