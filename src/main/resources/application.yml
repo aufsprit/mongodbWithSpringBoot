@@ -8,3 +8,6 @@ spring:
   data.rest:
     base-path: /api
     detection-strategy: annotated
+Java:
+  runtime:
+    version: 17
