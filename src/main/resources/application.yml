@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      uri: mongodb+srv://${ID}:${KEY}@testdb.b78i0zh.mongodb.net/?retryWrites=true&w=majority
+      uri: mongodb+srv://env("ID"):env("KEY")@testdb.b78i0zh.mongodb.net/?retryWrites=true&w=majority
       database: testDB
   thymeleaf3:
     decoupled-logic: true
