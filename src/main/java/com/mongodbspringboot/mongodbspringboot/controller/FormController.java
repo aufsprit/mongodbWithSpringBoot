@@ -69,14 +69,14 @@ public class FormController {
                     modelAndView.addObject("outputFormList",
                             studentInfoSelectService.selectInfoByGrade(searchValue));
                 }
-                case "BELONG" -> {
+                case "DEPARTMENT" -> {
                     modelAndView.addObject("count",
                             infoCountService.countInfoByBelong(searchValue));
                     modelAndView.addObject("outputFormList",
                             studentInfoSelectService.selectInfoByDept_name(searchValue));
                 }
                 case "HOBBY" -> {
-                    String[] hobby = searchValue.split(" ");
+                    String[] hobby = searchValue.split(",");
                     modelAndView.addObject("outputFormList",
                             studentInfoSelectService.selectInfoByHobby(hobby));
                     modelAndView.addObject("count",
@@ -99,7 +99,7 @@ public class FormController {
                 return null;
             }
         }
-        String[] hobby = compoundDto.getHobby().split(" ");
+        String[] hobby = compoundDto.getHobby().split(",");
         if (!compoundDto.getName().equals("")&&
                 !compoundDto.getGrade().equals("")&&
                 !compoundDto.getBelong().equals("")&&

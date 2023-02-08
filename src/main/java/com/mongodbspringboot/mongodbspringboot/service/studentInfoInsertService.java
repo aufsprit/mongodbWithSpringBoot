@@ -16,10 +16,10 @@ public class studentInfoInsertService {
     private final studentInfoRepository studentInfoRepository;
 
     public void insertStudentInfo(InsertDto insertDto) {
-        String[] toBelong = insertDto.getBelong().split(" ");
+        String[] toBelong = insertDto.getBelong().split(",");
         Document belong = new Document();
         belong.append("coll_name", toBelong[0]).append("dept_name", toBelong[1]);
-        String[] hobby = insertDto.getHobby().split(" ");
+        String[] hobby = insertDto.getHobby().split(",");
         studentInfoRepository.save(
                 new studentInfo(
                         insertDto.getId(),
