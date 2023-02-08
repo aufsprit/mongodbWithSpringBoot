@@ -57,25 +57,25 @@ public class FormController {
                     studentInfoSelectService.selectAllInfo());
         } else {
             switch (keyword) {
-                case "NAME" : {
+                case "NAME" -> {
                     modelAndView.addObject("count",
                             infoCountService.countInfoByName(searchValue));
                     modelAndView.addObject("outputFormList",
                             studentInfoSelectService.selectInfoByName(searchValue));
                 }
-                case "GRADE" : {
+                case "GRADE" -> {
                     modelAndView.addObject("count",
                             infoCountService.countInfoByGrade(searchValue));
                     modelAndView.addObject("outputFormList",
                             studentInfoSelectService.selectInfoByGrade(searchValue));
                 }
-                case "BELONG" : {
+                case "BELONG" -> {
                     modelAndView.addObject("count",
                             infoCountService.countInfoByBelong(searchValue));
                     modelAndView.addObject("outputFormList",
                             studentInfoSelectService.selectInfoByDept_name(searchValue));
                 }
-                case "HOBBY" : {
+                case "HOBBY" -> {
                     String[] hobby = searchValue.split(" ");
                     modelAndView.addObject("outputFormList",
                             studentInfoSelectService.selectInfoByHobby(hobby));
