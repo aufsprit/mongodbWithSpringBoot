@@ -22,3 +22,11 @@
 
 #### javatechonline blog << 아주 잘 설명되어있음
 * https://javatechonline.com/mongodb/
+
+---
+### 데모
+* https://mongodbwithspringboot-aufsprit.koyeb.app/
+---
+### 결과물
+![](document/1.png)
+![](document/2.png)
