@@ -7,7 +7,7 @@ public enum SearchType {
     EMAIL("email"),
     HOBBY("hobby"),
     NAME("name"),
-    BELONG("belong");
+    DEPARTMENT("belong");
 
     @Getter private final String description;
 
